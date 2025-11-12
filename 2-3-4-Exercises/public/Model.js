@@ -1,4 +1,6 @@
-import {Observable, QueryRouter, Loader, sessionService} from '/js/src/index.js';
+import Home from './pages/home/Home.js';
+import About from './pages/about/About.js';
+import {Observable, QueryRouter, Loader, sessionService, WebSocketClient} from '/js/src/index.js';
 
 /**
  * Root of model tree
@@ -17,10 +19,21 @@ export default class Model extends Observable {
     this.loader = new Loader(this);
     this.loader.bubbleTo(this);
 
+    this.homePageModel = new Home(this);
+    this.homePageModel.bubbleTo(this);
+
+    this.aboutPageModel = new About(this);
+    this.aboutPageModel.bubbleTo(this);
+
     // Setup router
     this.router = new QueryRouter();
     this.router.observe(this.handleLocationChange.bind(this));
     this.router.bubbleTo(this);
+
+    this.randomNumber = -1
+    this.ws = new WebSocketClient();
+    this.ws.addListener('authed', this.handleWSAuthed.bind(this))
+    this.ws.addListener('command', this.handleWSCommand.bind(this))
 
     this.handleLocationChange(); // Init first page
   }
@@ -32,9 +45,22 @@ export default class Model extends Observable {
     switch (this.router.params.page) {
       case 'home':
         break;
+      case 'about':
+        break;
       default:
         this.router.go('?page=home');
         break;
+    }
+  }
+
+  handleWSAuthed() {
+    this.ws.setFilter(() => true)
+  }
+
+  handleWSCommand(message) {
+    if (message.command == "random-number") {
+      this.randomNumber = message.payload.value
+      this.notify()
     }
   }
 }

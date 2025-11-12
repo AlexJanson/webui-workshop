@@ -1,0 +1,26 @@
+name: Run tests on matrix with coverage
+on: push
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, macOS-latest]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: Run tests with coverage
+        run: |
+          echo "Running on ${{ matrix.os }}"
+          cd 2-3-4-Exercises
+          npm ci
+          npm run coverage
