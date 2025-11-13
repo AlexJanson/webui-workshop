@@ -1,12 +1,12 @@
-const  puppeteer = require('puppeteer')
-const { spawn } = require('node:child_process')
-const assert = require('node:assert');
-const config = require('../config.js');
+import puppeteer from 'puppeteer'
+import { spawn } from 'node:child_process'
+import assert from 'node:assert'
+import { config } from './config.js'
 
 async function waitForServerReady() {
     const url = `http://${config.http.hostname}:${config.http.port}`
 
-    const child = spawn('node', ['index.js', 'config.js'])
+    const child = spawn('node', ['index.js', 'test/config.js'])
 
     // child.stdout.on('data', (chunk) => {
     //     const text = chunk.toString()
@@ -62,7 +62,7 @@ describe('Application end-to-end tests', function() {
         // await page.goto(url, { waitUntil: 'networkidle0' })
         await page.goto(url)
         const currentUrl = page.url()
-        assert.strictEqual(currentUrl, 'http://localhost:8080/?page=home')
+        assert.strictEqual(currentUrl, `http://${config.http.hostname}:${config.http.port}/?page=home`)
     })
 
     describe('Home page tests', () => {

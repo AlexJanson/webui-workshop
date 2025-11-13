@@ -2,6 +2,7 @@
   "name": "webui-workshop",
   "version": "1.0.0",
   "description": "Project template for WebUI-Workshop 2020-2022",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/graduta/webui-workshop.git"

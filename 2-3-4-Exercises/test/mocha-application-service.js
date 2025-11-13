@@ -1,7 +1,6 @@
-const assert = require('node:assert')
-const sinon = require('sinon')
-const { ApplicationService } = require('../lib/ApplicationService.js')
-const { afterEach, beforeEach, it } = require('node:test')
+import assert from 'node:assert'
+import sinon from 'sinon'
+import { ApplicationService } from '../lib/ApplicationService.js'
 
 const VERSION = '1.0.0-rc1'
 const DATE = new Date('2025-11-12T15:05:08.000Z')

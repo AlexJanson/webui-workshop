@@ -105,3 +105,4 @@ dist
 
 config.js
 .vscode
+!2-3-4-Exercises/test/config.js
