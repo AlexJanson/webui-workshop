@@ -5,7 +5,7 @@ jobs:
   test:
     strategy:
       matrix:
-        os: [ubuntu-18.04, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
     
     runs-on: ${{ matrix.os }}
 
@@ -23,4 +23,4 @@ jobs:
           echo "Running on ${{ matrix.os }}"
           cd 2-3-4-Exercises
           npm ci
-          npm run coverage
+          npm run test
